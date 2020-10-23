@@ -1,0 +1,25 @@
+
+main {
+  width: 300px;
+  margin: 0 auto;
+}
+
+h1 {
+  color: rgb(34, 56, 180);
+}
+
+.border {
+  border: 1px #ccc solid;
+  padding: 5px;
+  padding-bottom: 30px;
+  width: 190px;
+}
+
+.add-contact {
+  background-color: rgb(34, 56, 180);
+  color: #fff;
+  margin-top: 20px;
+  width: 180px;
+  padding: 8px 5px;
+  border-radius: 7px;
+}

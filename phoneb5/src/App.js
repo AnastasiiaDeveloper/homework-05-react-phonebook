@@ -1,16 +1,17 @@
 
 import React, { Component } from 'react'
 import './App.css'
+import Filter from './Components/Filter'
+import ContactList from './Components/ContactList'
+import ContactForm from './Components/ContactForm'
 import v4 from 'uuid/dist/v4'
-import {
-  CSSTransition,
-  TransitionGroup,
-} from 'react-transition-group'
+
 
 // new markup
 // logic on removing contact
 // conditional rendering on 'Filter' component
 // transitions
+
 
 class App extends Component {
   state = {
@@ -72,97 +73,6 @@ class App extends Component {
           removeContact={this.removeContact}
         />
       </main>
-    )
-  }
-}
-
-class ContactForm extends Component {
-  addContact() {
-    const nameInput = document.getElementById('name')
-    const contactName = nameInput.value
-
-    const contacts = this.props.contacts
-    if (contacts.some(contact => contact.name === contactName)) {
-      alert(`${contactName} is already in contacts.`)
-      return
-    }
-
-    const phoneInput = document.getElementById('number')
-    const contactPhone = phoneInput.value
-
-    contacts.push({
-      id: v4(),
-      name: contactName,
-      number: contactPhone,
-    })
-
-    this.props.updateContacts(contacts)
-  }
-
-  render() {
-    return (
-      <div className="border">
-          <h2>Name</h2>
-          <input id="name" placeholder="Enter name..." />
-          <h2>Number</h2>
-          <input id="number" placeholder="Enter number..." />
-          <br />
-          <button className="add-contact" onClick={() => this.addContact()}>
-            Add contact
-          </button>
-      </div>
-    )
-  }
-}
-
-class Filter extends Component {
-  findContactByName() {
-    const filterInput = document.getElementById('filter')
-    const filterString = filterInput.value.toLowerCase()
-
-    if (!filterString) {
-      this.props.setDefaultContacts()
-      return
-    }
-
-    const filteredContacts = this.props.contacts.filter(contact => contact.name.toLowerCase().includes(filterString))
-    this.props.showFilteredContacts(filteredContacts)
-  }
-  
-  render() {
-    return (
-      <>
-        <h2>Find contacts by name</h2>
-        <input id="filter" onChange={() => this.findContactByName()} />
-      </>
-    )
-  }
-}
-
-class ContactList extends Component {
-  removeContact(id) {
-    this.props.removeContact(this.props.contacts, id)
-  }
-
-  render() {
-    return (
-      <ul>
-        <TransitionGroup>
-          {this.props.contacts.map(contact =>
-            <CSSTransition
-              timeout={250}
-              classNames="fade"
-            >
-              <li>
-                {contact.name}: {contact.number}
-                <button className="delete-icon" onClick={() => this.removeContact(contact.id)}>
-                  &times;
-                </button>
-              </li>
-            </CSSTransition>
-          )}
-        </TransitionGroup>
-      </ul>
     )
   }
 }

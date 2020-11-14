@@ -23,3 +23,33 @@ h1 {
   padding: 8px 5px;
   border-radius: 7px;
 }
+
+
+.delete-icon {
+background: transparent;
+border: 2px solid rgb(163, 27, 39);
+color: rgb(141, 20, 37);
+display: inline-block;
+font-size: 12px;
+height: 20px;
+line-height: 2px;
+margin: 0 0 8px;
+padding: 0;
+text-align: center;
+width: 20px;
+}
+
+
+.filter-form {
+  background-color: rgb(138, 141, 160);
+  color: #fff;
+  width: 240px;
+  padding: 8px 5px;
+  border-radius: 7px; 
+}
+.fade {
+  background-color: rgb(138, 141, 160);
+  width: 240px;
+  padding: 8px 5px;
+  border-radius: 7px; 
+}

@@ -1,45 +1,95 @@
-
-import React, { Component } from 'react'
-import v4 from 'uuid/dist/v4'
-
+import React, { Component } from "react";
+import v4 from "uuid/dist/v4";
 
 class ContactForm extends Component {
-    addContact() {
-      const nameInput = document.getElementById('name')
-      const contactName = nameInput.value
-  
-      const contacts = this.props.contacts
-      if (contacts.some(contact => contact.name === contactName)) {
-        alert(`${contactName} is already in contacts.`)
-        return
-      }
-  
-      const phoneInput = document.getElementById('number')
-      const contactPhone = phoneInput.value
-  
-      contacts.push({
-        id: v4(),
-        name: contactName,
-        number: contactPhone,
-      })
-  
-      this.props.updateContacts(contacts)
+  state = {
+    numberS: "",
+    showErr: false,
+    name: "",
+    before: {
+      opacity: 0,
+      display: "block",
+      marginLeft: "350px",
+      width: "250px",
+      transition: "4s",
+      background: "red",
+      borderRadius: "5px",
+      textAlign: "center",
+    },
+    after: {
+      opacity: 1,
+      display: "block",
+      marginLeft: "0px",
+      width: "250px",
+      transition: "2s",
+      background: "red",
+      borderRadius: "5px",
+      color: "white",
+      textAlign: "center",
+    },
+  };
+  numberC = (e) => {
+    let number = e.target.value;
+
+    this.setState({
+      numberS: number,
+    });
+  };
+  addContact() {
+    const nameInput = document.getElementById("name");
+    const contactName = nameInput.value;
+
+    const contacts = this.props.contacts;
+    if (contacts.some((contact) => contact.name === contactName)) {
+      this.setState({ showErr: true, name: contactName });
+      setTimeout(() => {
+        this.setState({ showErr: false, name: contactName });
+      }, 4000);
+
+      // alert(`${contactName} is already in contacts.`);
+      return;
     }
-  
-    render() {
-      return (
-        <div className="border">
-            <h2>Name</h2>
-            <input id="name" placeholder="Enter name..." />
-            <h2>Number</h2>
-            <input id="number" placeholder="Enter number..." />
-            <br />
-            <button className="add-contact" onClick={() => this.addContact()}>
-              Add contact
-            </button>
-        </div>
-      )
-    }
+
+    contacts.push({
+      id: v4(),
+      name: contactName,
+      number: this.state.numberS,
+    });
+
+    this.props.updateContacts(contacts);
   }
 
-  export default ContactForm
+  render() {
+    return (
+      <div className="border">
+        <div style={this.state.showErr ? this.state.after : this.state.before}>
+          {this.state.name} is already in contacts.
+        </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Name</label>
+          <input type="text" class="form-control" id="name" />
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Number</label>
+          <input
+            type="text"
+            class="form-control"
+            id="number"
+            placeholder="Enter number..."
+            onChange={this.numberC}
+            value={this.state.numberS}
+          />
+        </div>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          onClick={() => this.addContact()}
+        >
+          Add contacts
+        </button>
+      </div>
+    );
+  }
+}
+
+export default ContactForm;
